@@ -116,7 +116,7 @@ form button:active{
   padding: 0;
   margin: 0 8vw;
   max-width: 100%;
-  width: 50%;
+  width: 80%;
   background-color: #10161B;
 
   @media(max-width: 800px){
@@ -147,6 +147,10 @@ form button:active{
   display: flex;
   align-items: center;
   gap: 10vw;
+
+  @media(max-width: 800px){
+    gap: 5px;
+  }
 }
 
 .song a{
@@ -164,12 +168,11 @@ form button:active{
 .songs-container h1{
   position: relative;
   left: 40%;
-  color: whitesmoke;
-  text-align: center;
+  color: whitesmoke; 
   margin: 40px;
 
   @media(max-width: 800px){
-    text-align: left;
+    margin: 40px 0 40px;
   }
 
   @media(max-width: 500px){
@@ -208,9 +211,8 @@ form button:active{
 }
 
 #myAudio{
-  width: 25px;
+  width: 300px;
   height: 25px;
-  border-radius: 50%;
 }
 
 .prev-and-next-container h2 {
