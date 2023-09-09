@@ -6,10 +6,9 @@ const url = `https://api.lyrics.ovh`
 
 
 
-
 const getMoreSongs = async(nextUrl)=>{
     try{
-        const response = await fetch(`https://cors-anywhere.herokuapp.com/${nextUrl}`)
+        const response = await fetch(`https://corsproxy.io/?${nextUrl}`)
         const data = await response.json()
         
         displaySongs(data)
@@ -19,22 +18,68 @@ const getMoreSongs = async(nextUrl)=>{
 }
 
 
+const displayTracks = (tracks, albumCover, albumTitle, artistName)=>{
+    const newArtitstName = artistName.replace(/\s+/g, '')
+    const data = tracks.data
+    songsContainer.innerHTML = `<h1>${albumTitle}</h1>`
+    songsContainer.innerHTML += `<img class='cover-image' src='${albumCover}' alt='artist-logo'>` 
+    songsContainer.innerHTML += `<h3>Músicas do album</h3>`   
+    songsContainer.innerHTML += data.map(track =>`
+        <li class='track-list'>
+            ${track.title}
+        </li>
+    `).join('')
+
+
+    prevNextContainer.innerHTML = `
+        <button class='btn' onClick={fetchSongs('${newArtitstName}')}>Buscar artista</button>
+    `
+}
+
+
+songsContainer.addEventListener('click', async(e)=>{
+    try{
+
+        if(e.target.tagName === 'IMG'){
+            const albumCover = e.target.getAttribute('album-cover')
+            const tracklist = e.target.getAttribute('album-tracks')
+            const albumTitle = e.target.getAttribute('album-title')
+            const artistName = e.target.getAttribute('artist-name')
+            
+            const response = await fetch(`https://corsproxy.io/?${tracklist}`)
+            const data = await response.json()
+            
+            displayTracks(data, albumCover, albumTitle, artistName)
+        }
+
+    }catch(e){
+        alert(e)
+    }
+})
+
+
 const displaySongs = (songsInfo)=>{
     const data = songsInfo.data
-    console.log(data)
+    
     songsContainer.innerHTML = data.map(song =>`
         <li class='song' data-artist='' data-song-title=''>
-            <img 
-                class='artist-logo' 
-                src='${song.artist.picture}' 
-                alt='artist-logo'>
-            <a href='${song.artist.link}' target='_blank'>
-                <strong>${song.artist.name}</strong> - ${song.title}
-            </a>
-            <audio controls>
+            <div>
+                <img 
+                    album-cover='${song.album.cover_big}'
+                    album-tracks='${song.album.tracklist}'
+                    album-title='${song.album.title}'
+                    artist-name='${song.artist.name}'
+                    class='artist-logo' 
+                    src='${song.artist.picture}' 
+                    alt='artist-logo'>
+                <a href='${song.artist.link}' target='_blank'>
+                    <strong>${song.artist.name}</strong> - ${song.title}
+                </a>
+            </div>
+            <audio controls id='myAudio'>
                 <source src='${song.preview}' type="audio/mpeg">
                 Your browser does not support the audio element.
-            </audio>
+            </audio>             
         </li>
     `).join('')
 
@@ -81,7 +126,7 @@ form.addEventListener('submit', (e)=>{
 })
 
 
-const fetchLyrics = async(artist, songTitle)=>{
+/* const fetchLyrics = async(artist, songTitle)=>{
     try{
         const response = await fetch(`${url}/v1/${artist}/${songTitle}`)
         const data = await response.json()
@@ -91,7 +136,7 @@ const fetchLyrics = async(artist, songTitle)=>{
     }
 }
 
-/* songsContainer.addEventListener('click', (e)=>{
+songsContainer.addEventListener('click', (e)=>{
     const clickedElement = e.target
     const artist = clickedElement.getAttribute('data-artist')
     const songTitle = clickedElement.getAttribute('data-song-title')
