@@ -58,8 +58,14 @@ songsContainer.addEventListener('click', async(e)=>{
 })
 
 
+let count = 0
+
 const displaySongs = (songsInfo)=>{
-    alert('Devido à limitação nos serviços de hospedagem, infelizmente não pude ter o preview de trecho das músicas.')
+    count++
+    console.log(count)
+    if(count === 1){
+        alert('Devido à limitação nos serviços de hospedagem, infelizmente não pude ter o preview de trecho das músicas.')
+    }
     const data = songsInfo.data
     
     songsContainer.innerHTML = data.map(song =>`
