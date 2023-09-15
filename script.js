@@ -59,6 +59,7 @@ songsContainer.addEventListener('click', async(e)=>{
 
 
 const displaySongs = (songsInfo)=>{
+    alert('Devido à limitação nos serviços de hospedagem, infelizmente não pude ter o preview de trecho das músicas.')
     const data = songsInfo.data
     
     songsContainer.innerHTML = data.map(song =>`
@@ -76,10 +77,11 @@ const displaySongs = (songsInfo)=>{
                     <strong>${song.artist.name}</strong> - ${song.title}
                 </a>
             </div>
+            
             <audio controls id='myAudio'>
                 <source src='${song.preview}' type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>             
+                Your browser does not support the audio element.                
+            </audio>                      
         </li>
     `).join('')
 

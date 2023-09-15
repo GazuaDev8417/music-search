@@ -125,6 +125,17 @@ form button:active{
   }
 }
 
+.popup{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20%;
+  border: 1px solid;
+  padding: 5px;
+  text-align: center;
+}
+
 .song{
   display: flex;
   align-items: center;
