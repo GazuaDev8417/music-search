@@ -152,6 +152,7 @@ form button:active{
 .song:hover{
   background-color: #131517;
   border-radius: 10px;
+  padding-right: 10px;
 }
 
 .song div{
@@ -167,18 +168,23 @@ form button:active{
 .song a{
   text-decoration: none;
   color: black;
+}
+
+.song img:hover{
+  cursor: pointer;
+  transform: scale(1.1);
   transition: .5s;
 }
 
-.song:hover, .song a:hover{
+.song a:hover, .song .track-list-link:hover{
   cursor: pointer;
   transform: scale(1.1);
-  color: white;  
+  color: white; 
+  transition: .5s; 
 }
 
 .songs-container h1{
-  position: relative;
-  left: 40%;
+  
   color: whitesmoke; 
   margin: 40px;
 

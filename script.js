@@ -40,7 +40,7 @@ const displayTracks = (tracks, albumCover, albumTitle, artistName)=>{
 songsContainer.addEventListener('click', async(e)=>{
     try{
 
-        if(e.target.tagName === 'IMG'){
+        if(e.target.tagName === 'IMG' || e.target.tagName === 'SPAN'){
             const albumCover = e.target.getAttribute('album-cover')
             const tracklist = e.target.getAttribute('album-tracks')
             const albumTitle = e.target.getAttribute('album-title')
@@ -58,14 +58,7 @@ songsContainer.addEventListener('click', async(e)=>{
 })
 
 
-let count = 0
-
 const displaySongs = (songsInfo)=>{
-    count++
-    console.log(count)
-    if(count === 1){
-        alert('Devido à limitação nos serviços de hospedagem, infelizmente não pude ter o preview de trecho das músicas.')
-    }
     const data = songsInfo.data
     
     songsContainer.innerHTML = data.map(song =>`
@@ -81,13 +74,14 @@ const displaySongs = (songsInfo)=>{
                     alt='artist-logo'>
                 <a href='${song.artist.link}' target='_blank'>
                     <strong>${song.artist.name}</strong> - ${song.title}
-                </a>
+                </a>                
             </div>
-            
-            <audio controls id='myAudio'>
-                <source src='${song.preview}' type="audio/mpeg">
-                Your browser does not support the audio element.                
-            </audio>                      
+            <span
+                album-cover='${song.album.cover_big}'
+                album-tracks='${song.album.tracklist}'
+                album-title='${song.album.title}'
+                artist-name='${song.artist.name}' 
+                class='track-list-link'>Ver album</span>                     
         </li>
     `).join('')
 
@@ -132,25 +126,6 @@ form.addEventListener('submit', (e)=>{
 
     fetchSongs(searchTerm)
 })
-
-
-/* const fetchLyrics = async(artist, songTitle)=>{
-    try{
-        const response = await fetch(`${url}/v1/${artist}/${songTitle}`)
-        const data = await response.json()
-        const lyrics = data.lyrics.replace(/(\r\n|\r|\n)/g, '<br>')
-    }catch(e){
-        alert(`Erro ao buscar letra da música ${songTitle}: ${e}`)
-    }
-}
-
-songsContainer.addEventListener('click', (e)=>{
-    const clickedElement = e.target
-    const artist = clickedElement.getAttribute('data-artist')
-    const songTitle = clickedElement.getAttribute('data-song-title')
-    
-    fetchLyrics(artist, songTitle)
-}) */
 
 
 
